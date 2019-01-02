@@ -1,0 +1,27 @@
+{
+  "name": "@hungry/sassy-react-component",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "private": false,
+  "sideEffects": false,
+  "scripts": {
+    "archetype:update": "spell new library"
+  },
+  "dependencies": {
+    "@hungry/bulma-theme": "~0.0.1",
+    "bulma": "^0.7.2",
+    "fp-ts": "^1.12.0",
+    "styled-components": "^4.1.1",
+    "styled-system": "^3.1.11"
+  },
+  "peerDependencies": {
+    "react": "next",
+    "react-dom": "next"
+  },
+  "homepage": "https://github.com/damianbaar/catch-the-sun/tree/master/packages/component/sassy-react-component",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/damianbaar/catch-the-sun/tree/master/packages/component/sassy-react-component"
+  }
+}

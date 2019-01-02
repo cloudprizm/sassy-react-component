@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`attach bulma variants and functional component with variant as props 1`] = `
+<button
+  className="existingCSSClassName asSth-style asButton-style sthDifferent-style "
+/>
+`;
