@@ -1,4 +1,5 @@
 `sassy-react-component`
+
 HOC to wrap typings and css modules as BEM styles within react component definition.
 There are two variants, one based on `styled-components` second one, on simple html primitives.
 
