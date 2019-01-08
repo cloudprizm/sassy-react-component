@@ -9,7 +9,6 @@ import {
   ComponentType,
   RefAttributes,
   AllHTMLAttributes,
-  HTMLAttributes,
   DOMAttributes
 } from 'react'
 import { StyledComponent, AnyStyledComponent } from 'styled-components'
