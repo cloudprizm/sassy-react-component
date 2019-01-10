@@ -6,6 +6,8 @@ There is no need to used `className` attribute or concatenate styles at all - al
 
 Real world example [`@hungry/bulma-element`](https://github.com/hungry-consulting/bulma-element).
 
+[Docs](https://hungry-consulting.github.io/sassy-react-component/)
+
 ### Why
 * one way to define any `sass` component for `react` with type-checking
 * improve soundness and correctness of defined components with easy ability to detect changes between `sass` and `typescript` (to catch bug easily)
