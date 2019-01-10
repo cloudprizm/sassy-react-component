@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/hungry-consulting/sassy-react-component
+	branch = master
+	commit = bdfb29c32a99c1ee5c2a8aaae31e5772fa0978ac
+	method = merge
+	cmdver = 0.4.0
+	parent = fdafe6f5f92a438014b2a7d6f49bf7d4f3cce2bb
