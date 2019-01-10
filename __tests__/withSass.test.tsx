@@ -1,7 +1,7 @@
 import * as React from 'react'
 import renderer from 'react-test-renderer'
 
-import { styledWithVariants } from './withSass'
+import { styledWithVariants } from '../src/withSass'
 import styled from 'styled-components'
 
 type Style = 'asSth' | 'sthDifferent' | 'someBlockStyle'
