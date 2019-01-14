@@ -97,10 +97,13 @@ export type StyledFunctionalComponentProps
 
 export type ComponentWithVariants = FunctionComponent<StyledFunctionalComponentProps<{}, {}, ''>>
 
+export type InputComponent<P extends object, A extends string> =
+  StyledComponent<StyledAs, any, P, A> | FunctionComponent<P>
+
 export const styledWithVariants =
   <V extends Record<keyof V, boolean>>(lookup: StylesLookup<V>) =>
     <HTMLType = DOMAttributes<unknown>>(...variants: Array<keyof V>) =>
-      <P extends object, A extends string>(WrappedComponent: StyledComponent<StyledAs, any, P, A>):
+      <P extends object, A extends string>(WrappedComponent: InputComponent<P, A>):
         FunctionComponent<StyledFunctionalComponentProps<V, P, A> & Partial<HTMLType>> =>
         memo((props) =>
           createElement(

@@ -1,27 +1,25 @@
 {
   "compilerOptions": {
     "outDir": "dist",
+    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "esnext",
+    "jsx": "react",
     "declaration": true,
-    "target": "es5",
-    "jsx": "preserve",
-    "module": "commonjs",
     "moduleResolution": "node",
     "strict": true,
-    "emitDeclarationOnly": true,
-    "noImplicitReturns": false,
-    "noImplicitAny": false,
-    "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true,
-    "noUnusedParameters": false,
-    "typeRoots": [
-      "./typings"
+    "sourceMap": true,
+    "lib": [
+      "dom",
+      "esnext"
     ],
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
     "noFallthroughCasesInSwitch": true,
     "types": [
       "node"
-    ],
-    "lib": [
-      "esnext"
     ]
   },
   "include": [

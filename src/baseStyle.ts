@@ -1,9 +1,11 @@
 import styled, { ThemedStyledFunction } from 'styled-components'
-import { ComponentType } from 'react'
+import { ComponentType, FunctionComponent } from 'react'
 
 import {
   FontSizeProps,
   FontWeightProps,
+  zIndex,
+  ZIndexProps,
   LineHeightProps,
   compose,
   SpaceProps,
@@ -30,25 +32,31 @@ export type BaseStyle =
   & SpaceProps
   & BorderRadiusProps
   & BorderProps
+  & ZIndexProps
   & (WidthProps & MinWidthProps & MinHeightProps)
 
 export const baseStyles = <K = BaseStyle>(props: K) => compose(
   space,
+  zIndex,
   compose(fontSize, fontWeight, lineHeight),
   compose(border, borderRadius),
   compose(width, minHeight, minWidth),
 )
 
+type InputComponent<P> = keyof JSX.IntrinsicElements | ComponentType<P>
+
+// INFO typechecking is failing when using styled<P & BaseStyle>(component) investigate
+// or StyledComponent<InputComponent<P>, T, BaseStyle
 export const toStyledGenericFromStringOrJSX =
-  <P>(component: keyof JSX.IntrinsicElements | ComponentType<P>) =>
-    styled(component) <BaseStyle & P>`${baseStyles}`
+  <P>(component: InputComponent<P>) =>
+    styled(component)`${baseStyles}` as FunctionComponent<P & BaseStyle>
 
 export const toStyledGenericFromStyledFunction =
   <C extends object,
     P extends object,
     K extends string | number | symbol,
     >(component: ThemedStyledFunction<any, C, P, K>) =>
-    component<BaseStyle>`${baseStyles}`
+    component<BaseStyle>`${baseStyles}` 
 
 export const div = toStyledGenericFromStringOrJSX('div')
 export const section = toStyledGenericFromStringOrJSX('section')
