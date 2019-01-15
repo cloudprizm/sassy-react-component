@@ -54,9 +54,9 @@ export const toStyledGenericFromStringOrJSX =
 export const toStyledGenericFromStyledFunction =
   <C extends object,
     P extends object,
-    K extends string | number | symbol,
+    K extends string,
     >(component: ThemedStyledFunction<any, C, P, K>) =>
-    component<BaseStyle>`${baseStyles}` 
+    component<BaseStyle>`${baseStyles}` as FunctionComponent<P & BaseStyle>
 
 export const div = toStyledGenericFromStringOrJSX('div')
 export const section = toStyledGenericFromStringOrJSX('section')

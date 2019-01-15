@@ -23,6 +23,7 @@ type StyledAs = keyof JSX.IntrinsicElements | ComponentType
 
 interface SassyDefinition<V> {
   lookup: StylesLookup<V>
+  className?: string
   variants?: SassyDefinitionComponentVariants<V>
 }
 
@@ -68,7 +69,7 @@ const toBeOrNotToBe =
     (k: string, n: string): Either<string, string> => !!dict[k] ? right(n) : left(n)
 
 const getSassVariantsFromProps =
-  <K>({ variants, lookup: dict, ...props }: SassyComponent<K> & SassyDefinition<K>) => {
+  <K>({ variants, lookup: dict, ...props }: SassyDefinition<K>) => {
     const embeddedVariants = embeddedVariantsToRecord(variants as string[])
     const propsWithEmbeddedVariants: Record<string, unknown> = { ...props, ...embeddedVariants }
     const maybeCSSKeys = mapWithKey(propsWithEmbeddedVariants, checkInLookup(dict))
@@ -100,31 +101,37 @@ export type ComponentWithVariants = FunctionComponent<StyledFunctionalComponentP
 export type InputComponent<P extends object, A extends string> =
   StyledComponent<StyledAs, any, P, A> | FunctionComponent<P>
 
+const withDisplayName = <P>(component: FunctionComponent<P>, variants: string[]) => {
+  component.displayName = variants[0]
+  return component
+}
+
+// TODO combine these functions
 export const styledWithVariants =
   <V extends Record<keyof V, boolean>>(lookup: StylesLookup<V>) =>
     <HTMLType = DOMAttributes<unknown>>(...variants: Array<keyof V>) =>
-      <P extends object, A extends string>(WrappedComponent: InputComponent<P, A>):
+      <P extends object, A extends string>(component: InputComponent<P, A>):
         FunctionComponent<StyledFunctionalComponentProps<V, P, A> & Partial<HTMLType>> =>
-        memo((props) =>
-          createElement(
-            WrappedComponent as AnyStyledComponent,
-            getSassVariantsFromProps<V>({ lookup, variants, ...props, ref: props.forwardedRef })
-          )
-        )
+        withDisplayName(
+          memo((props) =>
+            createElement(
+              component as InputComponent<any, never>,
+              getSassVariantsFromProps({ lookup, variants, ...props, ref: props.forwardedRef })
+            )
+          ), variants)
 
 export const staticWithVariants =
   <V extends Record<keyof V, boolean>>(lookup: StylesLookup<V>) =>
     (...variants: Array<keyof V>) =>
-      (primitive: keyof JSX.IntrinsicElements):
-        FunctionComponent<Partial<V & RefForwarder>> =>
-        memo((props) =>
-          createElement(
-            primitive,
-            // TODO provide correct signature for method below 
-            // -> RefForwarder has wrong signature
-            getSassVariantsFromProps<V>({ lookup, variants, ...props, ref: props.forwardedRef })
-          )
-        )
+      (component: keyof JSX.IntrinsicElements):
+        FunctionComponent<Partial<V & RefForwarder<ComponentType>>> =>
+        withDisplayName(
+          memo((props) =>
+            createElement(
+              component,
+              getSassVariantsFromProps({ lookup, variants, ...props, ref: props.forwardedRef })
+            )
+          ), variants)
 
 export const withRefForwarding = <K>(Component: FunctionComponent<K>) =>
   forwardRef<AnyStyledComponent, K>((props, ref) =>
