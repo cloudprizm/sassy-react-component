@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/hungry-consulting/sassy-react-component
 	branch = master
-	commit = 9f909bf78dd5ea22c305de4a115e187d4b4ad0b6
+	commit = eea22faf32100278a6cacbb428c6d56e3ba7bff3
 	method = merge
 	cmdver = 0.4.0
-	parent = d5e0b4b692078ac13bf2f37ca117b8d7431a0eb1
+	parent = 80b173ba876df7e126078cb7a94f6a08918eecd4
