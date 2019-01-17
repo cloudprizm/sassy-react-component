@@ -1,4 +1,4 @@
-import styled, { ThemedStyledFunction } from 'styled-components'
+import styled, { ThemedStyledFunction, StyledComponentProps } from 'styled-components'
 import { ComponentType, FunctionComponent } from 'react'
 
 import {
@@ -45,18 +45,27 @@ export const baseStyles = <K = BaseStyle>(props: K) => compose(
 
 type InputComponent<P> = keyof JSX.IntrinsicElements | ComponentType<P>
 
-// INFO typechecking is failing when using styled<P & BaseStyle>(component) investigate
-// or StyledComponent<InputComponent<P>, T, BaseStyle
+interface WithPolymorphicAs {
+  as?: keyof JSX.IntrinsicElements
+}
+
+type StyledComponentWithBaseStyleAttached<P> = FunctionComponent<
+  & P
+  & BaseStyle
+  & StyledComponentProps<InputComponent<P>, BaseStyle, never, never>
+  & WithPolymorphicAs // styled-components does not export variant with as
+  >
+
 export const toStyledGenericFromStringOrJSX =
   <P>(component: InputComponent<P>) =>
-    styled(component)`${baseStyles}` as FunctionComponent<P & BaseStyle>
+    styled(component)<P & BaseStyle>`${baseStyles}` as StyledComponentWithBaseStyleAttached<P>
 
 export const toStyledGenericFromStyledFunction =
   <C extends object,
     P extends object,
     K extends string,
     >(component: ThemedStyledFunction<any, C, P, K>) =>
-    component<BaseStyle>`${baseStyles}` as FunctionComponent<P & BaseStyle>
+    component<BaseStyle>`${baseStyles}` as StyledComponentWithBaseStyleAttached<P>
 
 export const div = toStyledGenericFromStringOrJSX('div')
 export const section = toStyledGenericFromStringOrJSX('section')
