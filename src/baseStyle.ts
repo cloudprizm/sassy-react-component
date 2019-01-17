@@ -1,4 +1,4 @@
-import styled, { ThemedStyledFunction, StyledComponentProps } from 'styled-components'
+import styled, { ThemedStyledFunction, ThemedStyledProps } from 'styled-components'
 import { ComponentType, FunctionComponent } from 'react'
 
 import {
@@ -43,29 +43,29 @@ export const baseStyles = <K = BaseStyle>(props: K) => compose(
   compose(width, minHeight, minWidth),
 )
 
-type InputComponent<P> = keyof JSX.IntrinsicElements | ComponentType<P>
+export type ToStyledInput<P> = keyof JSX.IntrinsicElements | ComponentType<P>
 
 export interface WithPolymorphicAs {
   as?: keyof JSX.IntrinsicElements
 }
 
-export type StyledComponentWithBaseStyleAttached<P> = FunctionComponent<
+export type StyledComponentWithBaseStyleAttached<P, T> = FunctionComponent<
   & P
   & BaseStyle
-  & StyledComponentProps<InputComponent<P>, BaseStyle, never, never>
+  & ThemedStyledProps<P, T>
   & WithPolymorphicAs // styled-components does not export variant with as
-  >
+>
 
 export const toStyledGenericFromStringOrJSX =
-  <P>(component: InputComponent<P>) =>
-    styled(component)<P & BaseStyle>`${baseStyles}` as StyledComponentWithBaseStyleAttached<P>
+  <T, P>(component: ToStyledInput<P>) =>
+    styled(component) <P & BaseStyle>`${baseStyles}` as StyledComponentWithBaseStyleAttached<P, T>
 
 export const toStyledGenericFromStyledFunction =
-  <C extends object,
+  <T, C extends object,
     P extends object,
     K extends string,
     >(component: ThemedStyledFunction<any, C, P, K>) =>
-    component<BaseStyle>`${baseStyles}` as StyledComponentWithBaseStyleAttached<P>
+    component<BaseStyle>`${baseStyles}` as StyledComponentWithBaseStyleAttached<P, T>
 
 export const div = toStyledGenericFromStringOrJSX('div')
 export const section = toStyledGenericFromStringOrJSX('section')
