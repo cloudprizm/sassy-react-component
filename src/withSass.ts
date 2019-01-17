@@ -74,6 +74,8 @@ const withDisplayName = <P>(component: FunctionComponent<P>, variants: string[])
 export type ComponentWithVariant<P, V> =
   FunctionComponent<Partial<P & V & RefForwarder & HTMLAttributes<InputComponent<P & V>>>>
 
+export type AnyComponentWithVariant = ComponentWithVariant<any, any>
+
 export const withVariants =
   <V extends Record<keyof V, boolean>>(lookup: StylesLookup<V>) => (...variants: Array<keyof V>) =>
     <P>(component: InputComponent<P & RefForwarder>): ComponentWithVariant<P, V> =>

@@ -10,9 +10,11 @@ interface BEM {
 const CSS = { buttonBlock: 'buttonBlockStyle', hasModifier: 'hasModifierStyle' }
 
 const staticVariants = withVariants<BEM>(CSS)
-const StaticButton = staticVariants('buttonBlock')(Primitives.div)
+const Div = staticVariants('buttonBlock')(Primitives.div)
 
-const UsingAsAndBaseStyles = <StaticButton
+const DivWithAsAndBaseStylesAttached = <Div
   as="abbr"
   fontSize={10}
+  onClick={(e) => { }}
+  onMouseDown={(e => { })}
 />

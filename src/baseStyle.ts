@@ -45,11 +45,11 @@ export const baseStyles = <K = BaseStyle>(props: K) => compose(
 
 type InputComponent<P> = keyof JSX.IntrinsicElements | ComponentType<P>
 
-interface WithPolymorphicAs {
+export interface WithPolymorphicAs {
   as?: keyof JSX.IntrinsicElements
 }
 
-type StyledComponentWithBaseStyleAttached<P> = FunctionComponent<
+export type StyledComponentWithBaseStyleAttached<P> = FunctionComponent<
   & P
   & BaseStyle
   & StyledComponentProps<InputComponent<P>, BaseStyle, never, never>
