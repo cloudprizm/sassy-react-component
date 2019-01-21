@@ -52,7 +52,7 @@ export interface WithPolymorphicAs {
 export type StyledComponentWithBaseStyleAttached<P, T> = FunctionComponent<
   & P
   & BaseStyle
-  & ThemedStyledProps<P, T>
+  & Partial<ThemedStyledProps<P, T>>
   & WithPolymorphicAs // styled-components does not export variant with as
 >
 
